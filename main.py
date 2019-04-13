@@ -15,21 +15,31 @@ def user_signup():
         verifypass = request.form['verify']
         email = request.form['email']
 
+        length_username = len(user_name)
+        length_password = len(pass_word)
+
         if not user_name:
             error_message = "Incomplete form"
+
+        if length_username < 3 or length_username > 20:
+            error_message = "Invalid username"
 
         if not pass_word:
             error_message = "Incomplete form"
 
+        if length_password < 3 or length_password > 20:
+            error_message = "Invalid password"    
+
         if not verifypass:
-            error_message = "Incomplete form"            
+            error_message = "Incomplete form"     
+
+        if pass_word != verifypass:
+            error_message = "Passwords do not match"           
 
     return render_template("sign_in.html", error=error_message)
 
 @app.route("/welcome", methods=["GET", "POST"])
 def welcome():
     return render_template("welcome.html")
-
-
-
+    
 app.run()
