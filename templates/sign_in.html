@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST">
+    Username
+    <input type="text" name="username"><br>
+    Password
+    <input type="password" name="password"><br>
+    Verify Password
+    <input type="password" name="verify"><br>
+    Email (optional)
+    <input type="text" name="email"><br>
+    <input type="submit" value="Submit">
+</form>
+
+{{ error }}
+
+{% endblock %}
