@@ -6,16 +6,16 @@
 
     Username
     <input type="text" value = "{{user_name}}" name="username">
-    <span> {{ username_error_message }} {{ incomplete_error_message }}</span><br>
+    <span class='err'> {{ username_error_message }}</span><br>
     Password
     <input type="password" name="password">
-    <span> {{ password_error_message }} {{ incomplete_error_message }} </span><br>
+    <span class='err'> {{ password_error_message }} </span><br>
     Verify Password
     <input type="password" name="verify">
-    <span> {{ verify_error_message }} {{ incomplete_error_message }} </span><br>
+    <span class='err'> {{ verify_error_message }} </span><br>
     Email (optional)
     <input type="text" value = "{{email}}" name="email">
-    <span> {{ email_error_message }} </span><br>
+    <span class='err'> {{ email_error_message }} </span><br>
     <input type="submit" value="Submit">
 
 </form>

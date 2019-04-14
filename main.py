@@ -8,9 +8,7 @@ app.config['DEBUG'] = True
 @app.route("/", methods=["GET", "POST"])
 def user_signup():
     user_name = ""
-    incomplete_verify_error_message = ""
-    incomplete_un_error_message = ""
-    incomplete_pass_error_message = ""
+    
     username_error_message = ""
     password_error_message = ""
     verify_error_message = ""
@@ -29,19 +27,19 @@ def user_signup():
         length_email = len(email)
 
         if not user_name:
-            incomplete_un_error_message = "*Incomplete form, enter username"
+            username_error_message = "*Incomplete form, enter username"
 
         if length_username < 3 or length_username > 20:
             username_error_message = "Invalid username"
 
         if not pass_word:
-            incomplete_pass_error_message = "*Incomplete form, enter password"
+            password_error_message = "*Incomplete form, enter password"
 
         if length_password < 3 or length_password > 20:
             password_error_message = "Invalid password"    
 
         if not verifypass:
-            incomplete_verify_error_message = "*Incomplete form, verify password"     
+            verify_error_message = "*Incomplete form, verify password"     
 
         if pass_word != verifypass:
             verify_error_message = "Passwords do not match"    
@@ -59,20 +57,17 @@ def user_signup():
             if " " in email:
                 email_error_message = "Invalid email"                           
 
-        if not (incomplete_un_error_message, incomplete_verify_error_message,
-            incomplete_pass_error_message):
-            return render_template("welcome.html", user_name=user_name)       
+        if not (username_error_message + password_error_message + verify_error_message):
+            return welcome(user_name)     
 
-    return render_template("sign_in.html", incomplete_verify_error_message=incomplete_verify_error_message, 
-    incomplete_un_error_message=incomplete_un_error_message, 
-    incomplete_pass_error_message=incomplete_pass_error_message,
+    return render_template("sign_in.html", 
     username_error_message=username_error_message, password_error_message=password_error_message, 
     verify_error_message=verify_error_message, email_error_message=email_error_message, 
     user_name=user_name, email=email)
 
-@app.route("/welcome", methods=["POST"])
-def welcome():
-    user_name = request.form['username']
+
+def welcome(user_name):
+    
     return render_template("welcome.html", user_name=user_name)
 
 app.run()
