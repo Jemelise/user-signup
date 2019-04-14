@@ -3,17 +3,21 @@
 {% block content %}
 
 <form method="POST">
-    Username
-    <input type="text" value = "{{user_name}}" name="username"><br>
-    Password
-    <input type="password" name="password"><br>
-    Verify Password
-    <input type="password" name="verify"><br>
-    Email (optional)
-    <input type="text" value = "{{email}}" name="email"><br>
-    <input type="submit" value="Submit">
-</form>
 
-{{ error }}
+    Username
+    <input type="text" value = "{{user_name}}" name="username">
+    <span> {{ username_error_message }} {{ incomplete_error_message }}</span><br>
+    Password
+    <input type="password" name="password">
+    <span> {{ password_error_message }} {{ incomplete_error_message }} </span><br>
+    Verify Password
+    <input type="password" name="verify">
+    <span> {{ verify_error_message }} {{ incomplete_error_message }} </span><br>
+    Email (optional)
+    <input type="text" value = "{{email}}" name="email">
+    <span> {{ email_error_message }} </span><br>
+    <input type="submit" value="Submit">
+
+</form>
 
 {% endblock %}

@@ -8,7 +8,13 @@ app.config['DEBUG'] = True
 @app.route("/", methods=["GET", "POST"])
 def user_signup():
     user_name = ""
-    error_message = ""
+    incomplete_verify_error_message = ""
+    incomplete_un_error_message = ""
+    incomplete_pass_error_message = ""
+    username_error_message = ""
+    password_error_message = ""
+    verify_error_message = ""
+    email_error_message = ""
     email = ""
 
     if request.method == "POST":
@@ -23,42 +29,48 @@ def user_signup():
         length_email = len(email)
 
         if not user_name:
-            error_message = "*Incomplete form, enter username"
+            incomplete_un_error_message = "*Incomplete form, enter username"
 
         if length_username < 3 or length_username > 20:
-            error_message = "Invalid username"
+            username_error_message = "Invalid username"
 
         if not pass_word:
-            error_message = "*Incomplete form, enter password"
+            incomplete_pass_error_message = "*Incomplete form, enter password"
 
         if length_password < 3 or length_password > 20:
-            error_message = "Invalid password"    
+            password_error_message = "Invalid password"    
 
         if not verifypass:
-            error_message = "*Incomplete form, verify password"     
+            incomplete_verify_error_message = "*Incomplete form, verify password"     
 
         if pass_word != verifypass:
-            error_message = "Passwords do not match"    
+            verify_error_message = "Passwords do not match"    
 
         if email:
             if length_email < 3 or length_email > 20:
-                error_message = "Invalid email"  
+                email_error_message = "Invalid email"  
 
             if "@" not in email:
-                error_message = "Invalid email"
+                email_error_message = "Invalid email"
 
             if "." not in email:
-                error_message = "Invalid email"
+                email_error_message = "Invalid email"
 
             if " " in email:
-                error_message = "Invalid email"                          
-        
-        if not error_message:
-            return render_template("welcome.html", user_name=user_name)
+                email_error_message = "Invalid email"                           
 
-    return render_template("sign_in.html", error=error_message, user_name=user_name, email=email)
+        if not (incomplete_un_error_message, incomplete_verify_error_message,
+            incomplete_pass_error_message):
+            return render_template("welcome.html", user_name=user_name)       
 
-@app.route("/welcome", methods=["GET", "POST"])
+    return render_template("sign_in.html", incomplete_verify_error_message=incomplete_verify_error_message, 
+    incomplete_un_error_message=incomplete_un_error_message, 
+    incomplete_pass_error_message=incomplete_pass_error_message,
+    username_error_message=username_error_message, password_error_message=password_error_message, 
+    verify_error_message=verify_error_message, email_error_message=email_error_message, 
+    user_name=user_name, email=email)
+
+@app.route("/welcome", methods=["POST"])
 def welcome():
     user_name = request.form['username']
     return render_template("welcome.html", user_name=user_name)
